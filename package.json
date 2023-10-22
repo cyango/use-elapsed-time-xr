@@ -1,6 +1,6 @@
 {
-  "name": "use-elapsed-time",
-  "version": "3.0.4",
+  "name": "use-elapsed-time-xr",
+  "version": "3.0.5",
   "description": "React hook to measure elapsed time using requestAnimationFrame",
   "main": "./lib/index.js",
   "module": "./lib/index.module.js",
@@ -13,14 +13,14 @@
   "scripts": {
     "start": "node scripts/serve.js",
     "ts-declaration": "tsc --declaration --emitDeclarationOnly --outDir lib",
-    "build": "yarn ts-declaration && node scripts/build.js",
+    "build": "npm run ts-declaration && node scripts/build.js",
     "test": "jest --collectCoverage --coverageDirectory=\"coverage\"",
     "test-watch": "jest --watch",
-    "prepublish": "yarn build"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vydimitrov/use-elapsed-time.git"
+    "url": "git+https://github.com/cyango/use-elapsed-time-xr.git"
   },
   "keywords": [
     "react",
@@ -29,12 +29,13 @@
     "animation",
     "loop",
     "elapsed",
-    "time"
+    "time",
+    "xr"
   ],
   "bugs": {
-    "url": "https://github.com/vydimitrov/use-elapsed-time/issues"
+    "url": "https://github.com/cyango/use-elapsed-time-xr/issues"
   },
-  "homepage": "https://github.com/vydimitrov/use-elapsed-time#readme",
+  "homepage": "https://github.com/cyango/use-elapsed-time-xr#readme",
   "peerDependencies": {
     "react": ">=16.8.0"
   },
@@ -44,9 +45,12 @@
     "esbuild": "0.12.24",
     "jest": "27.1.0",
     "prettier": "2.3.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "ts-jest": "27.0.5",
-    "typescript": "4.4.2"
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "@coconut-xr/natuerlich": "^0.0.43"
   }
 }

@@ -1,2 +1,2 @@
-export { useElapsedTime } from './useElapsedTime'
-export type { Props, OnComplete, ReturnValue } from './useElapsedTime'
+export { useElapsedTimeXR } from './useElapsedTimeXR'
+export type { Props, OnComplete, ReturnValue } from './useElapsedTimeXR'

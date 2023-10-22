@@ -1,12 +1,12 @@
 import { renderHook, act } from '@testing-library/react-hooks'
-import { useElapsedTime } from './useElapsedTime'
-import type { Props } from './useElapsedTime'
+import { useElapsedTimeXR } from './useElapsedTimeXR'
+import type { Props } from './useElapsedTimeXR'
 
 jest.setTimeout(5000)
 
-const setupHook = (props: Props) => renderHook(() => useElapsedTime(props))
+const setupHook = (props: Props) => renderHook(() => useElapsedTimeXR(props))
 
-describe('useElapsedTime', () => {
+describe('useElapsedTimeXR', () => {
   afterEach(() => {
     jest.restoreAllMocks()
   })
