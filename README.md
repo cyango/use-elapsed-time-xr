@@ -1,4 +1,6 @@
-# useElapsedTime React hook
+# useElapsedTimeXR React hook
+
+This was forked from the original useElapsedTime, but this one works with XRSession.
 
 [![npm](https://img.shields.io/npm/v/use-elapsed-time)](https://www.npmjs.com/package/use-elapsed-time)
 [![npm](https://img.shields.io/npm/dw/use-elapsed-time)](https://www.npmjs.com/package/use-elapsed-time)

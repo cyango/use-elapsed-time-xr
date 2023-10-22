@@ -1,11 +1,11 @@
 {
   "name": "use-elapsed-time-xr",
-  "version": "3.0.5",
-  "description": "React hook to measure elapsed time using requestAnimationFrame",
+  "version": "3.0.6",
+  "description": "React hook to measure elapsed time using XRSession requestAnimationFrame",
   "main": "./lib/index.js",
   "module": "./lib/index.module.js",
   "types": "./lib/index.d.ts",
-  "author": "Vasil Dimitrov",
+  "author": "Cyango",
   "license": "MIT",
   "files": [
     "lib"
