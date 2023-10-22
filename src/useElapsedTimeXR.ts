@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
 import { useXR } from '@coconut-xr/natuerlich/react'
+import { useIsomorphicEffect } from './useIsomorphicEffect'
 
 type MayBe<T> = T | null
 
@@ -54,36 +54,42 @@ export const useElapsedTimeXR = ({
   const xrSession = useXR().session
 
   const loop = (time: number) => {
-    if (xrSession) {
-      const timeSec = time / 1000
-      if (previousTimeRef.current === null) {
-        previousTimeRef.current = timeSec
-        requestRef.current = xrSession.requestAnimationFrame(loop)
-        return
-      }
-
-      // get current elapsed time
-      const deltaTime = timeSec - previousTimeRef.current
-      const currentElapsedTime = elapsedTimeRef.current + deltaTime
-
-      // update refs with the current elapsed time
+    const timeSec = time / 1000
+    if (previousTimeRef.current === null) {
       previousTimeRef.current = timeSec
-      elapsedTimeRef.current = currentElapsedTime
-
-      // set current display time by adding the elapsed time on top of the startAt time
-      const currentDisplayTime =
-        startAtRef.current +
-        (updateInterval === 0
-          ? currentElapsedTime
-          : ((currentElapsedTime / updateInterval) | 0) * updateInterval)
-
-      const totalTime = startAtRef.current + currentElapsedTime
-      const isCompleted = typeof duration === 'number' && totalTime >= duration
-      setDisplayTime(isCompleted ? duration! : currentDisplayTime)
-
-      // repeat animation if not completed
-      if (!isCompleted) {
+      if (xrSession) {
         requestRef.current = xrSession.requestAnimationFrame(loop)
+      } else {
+        requestRef.current = requestAnimationFrame(loop)
+      }
+      return
+    }
+
+    // get current elapsed time
+    const deltaTime = timeSec - previousTimeRef.current
+    const currentElapsedTime = elapsedTimeRef.current + deltaTime
+
+    // update refs with the current elapsed time
+    previousTimeRef.current = timeSec
+    elapsedTimeRef.current = currentElapsedTime
+
+    // set current display time by adding the elapsed time on top of the startAt time
+    const currentDisplayTime =
+      startAtRef.current +
+      (updateInterval === 0
+        ? currentElapsedTime
+        : ((currentElapsedTime / updateInterval) | 0) * updateInterval)
+
+    const totalTime = startAtRef.current + currentElapsedTime
+    const isCompleted = typeof duration === 'number' && totalTime >= duration
+    setDisplayTime(isCompleted ? duration! : currentDisplayTime)
+
+    // repeat animation if not completed
+    if (!isCompleted) {
+      if (xrSession) {
+        requestRef.current = xrSession.requestAnimationFrame(loop)
+      } else {
+        requestRef.current = requestAnimationFrame(loop)
       }
     }
   }
@@ -91,24 +97,27 @@ export const useElapsedTimeXR = ({
   const cleanup = () => {
     if (xrSession) {
       requestRef.current && xrSession.cancelAnimationFrame(requestRef.current)
-      repeatTimeoutRef.current && clearTimeout(repeatTimeoutRef.current)
-      previousTimeRef.current = null
+    } else {
+      requestRef.current && cancelAnimationFrame(requestRef.current)
     }
+    repeatTimeoutRef.current && clearTimeout(repeatTimeoutRef.current)
+    previousTimeRef.current = null
   }
 
   const reset = useCallback(
     (newStartAt?: number) => {
-      if (xrSession) {
-        cleanup()
+      cleanup()
 
-        elapsedTimeRef.current = 0
-        const nextStartAt =
-          typeof newStartAt === 'number' ? newStartAt : startAt
-        startAtRef.current = nextStartAt
-        setDisplayTime(nextStartAt)
+      elapsedTimeRef.current = 0
+      const nextStartAt = typeof newStartAt === 'number' ? newStartAt : startAt
+      startAtRef.current = nextStartAt
+      setDisplayTime(nextStartAt)
 
-        if (isPlaying) {
+      if (isPlaying) {
+        if (xrSession) {
           requestRef.current = xrSession.requestAnimationFrame(loop)
+        } else {
+          requestRef.current = requestAnimationFrame(loop)
         }
       }
     },
@@ -137,13 +146,15 @@ export const useElapsedTimeXR = ({
   }, [displayTime, duration])
 
   useIsomorphicEffect(() => {
-    if (xrSession) {
-      if (isPlaying) {
+    if (isPlaying) {
+      if (xrSession) {
         requestRef.current = xrSession.requestAnimationFrame(loop)
+      } else {
+        requestRef.current = requestAnimationFrame(loop)
       }
-
-      return cleanup
     }
+
+    return cleanup
 
     // start animation over when duration or updateInterval change
   }, [isPlaying, duration, updateInterval])

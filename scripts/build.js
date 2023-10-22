@@ -5,7 +5,7 @@ const commonProps = {
   entryPoints: ['src/index.ts'],
   bundle: true,
   minify: true,
-  external: ['react'],
+  external: ['react', '@coconut-xr/natuerlich'],
 }
 
 esbuild.build({
