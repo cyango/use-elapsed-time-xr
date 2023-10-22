@@ -1,4 +1,4 @@
-# useElapsedTime example
+# useElapsedTimeXR example
 
 This example can be used for development or testing the hook.
 

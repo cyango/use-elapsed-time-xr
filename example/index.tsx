@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { useElapsedTime } from '../src/index'
+import { useElapsedTimeXR } from '../src/index'
 
 const ElapsedTime = () => {
   const [isPlaying, setIsPlaying] = useState(true)
   const [duration, setDuration] = useState(10)
-  const { elapsedTime, reset } = useElapsedTime({
+  const { elapsedTime, reset } = useElapsedTimeXR({
     isPlaying,
     duration,
     startAt: 4.2,

@@ -22,10 +22,10 @@ yarn add use-elapsed-time
 ## Basic usage
 
 ```jsx
-import { useElapsedTime } from 'use-elapsed-time'
+import { useElapsedTimeXR } from 'use-elapsed-time'
 
 const MyComponent = () => {
-  const { elapsedTime } = useElapsedTime({ isPlaying: true })
+  const { elapsedTime } = useElapsedTimeXR({ isPlaying: true })
 
   return elapsedTime
 }
@@ -39,7 +39,7 @@ const MyComponent = () => {
   const {
     elapsedTime: number,
     reset: (newStartAt: number) => void
-  } = useElapsedTime({
+  } = useElapsedTimeXR({
     isPlaying: boolean,
     duration?: number,
     startAt?: number,
